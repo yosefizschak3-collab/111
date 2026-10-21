@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צ'אט עם איתי</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .chat-card {
+            width: 100%;
+            max-width: 450px;
+            height: 90vh;
+            max-height: 650px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #2563eb;
+            color: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .header-info h2 {
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .header-info p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8fafc;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .bot-msg {
+            background: #ffffff;
+            color: #1e293b;
+            align-self: flex-start;
+            border-bottom-right-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .user-msg {
+            background: #2563eb;
+            color: white;
+            align-self: flex-end;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-container {
+            padding: 12px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            border-color: #2563eb;
+        }
+
+        .send-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-card">
+    <div class="chat-header">
+        <div class="avatar">א</div>
+        <div class="header-info">
+            <h2>איתי</h2>
+            <p>מחובר</p>
+        </div>
+    </div>
+
+    <div class="chat-messages" id="messagesContainer">
+        <div class="message bot-msg">
+            מה המצב? 😅
+        </div>
+    </div>
+
+    <div class="chat-input-container">
+        <input type="text" id="userInput" class="chat-input" placeholder="הקלד הודעה..." onkeypress="handleKey(event)">
+        <button class="send-btn" onclick="sendMsg()">➔</button>
+    </div>
+</div>
+
+<script>
+    function sendMsg() {
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        
+        if (text === '') return;
+
+        // הוספת הודעת המשתמש
+        appendMessage(text, 'user-msg');
+        input.value = '';
+
+        // כאן ניתן לחבר קריאת API למודל שפה שפועל לפי ההנחיות
+    }
+
+    function appendMessage(text, className) {
+        const container = document.getElementById('messagesContainer');
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', className);
+        msgDiv.textContent = text;
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function handleKey(e) {
+        if (e.key === 'Enter') {
+            sendMsg();
+        }
+    }
+</script>
+
+</body>
+</html>
